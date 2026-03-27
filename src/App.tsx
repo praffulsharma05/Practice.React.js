@@ -1,15 +1,28 @@
- 
+import React, { useState, useEffect } from 'react';
 
- 
 const App = () => {
-  const numbers = [10,20,30,40,50];
-//const xyz =  numbers.map(numbers=>numbers*2);
-//console.log(xyz)
+  const [numbers, setNumbers] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < 10) {
+      const timer = setTimeout(() => {
+        setNumbers(prev => [...prev, (currentIndex + 1) * 2]);
+        setCurrentIndex(prev => prev + 1);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [currentIndex]);
+
   return (
     <div>
-      <h1>Number</h1>
-      {numbers.map(num=><p className="text-lg gap-8">  {num*2}</p>)}
-       
+      <h2>2's Table:</h2>
+      <ul>
+        {numbers.map((num, index) => (
+          <li key={index}>2 × {index + 1} = {num}</li>
+        ))}
+      </ul>
     </div>
   );
 };
